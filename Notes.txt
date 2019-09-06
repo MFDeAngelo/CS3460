@@ -1,0 +1,24 @@
+std::string greeting = "Hello" //is an inicialization, not assignment.
+
+greeting.append("stringstuff") == greeting += "stringstuff"
+
+greeting.size()
+
+
+
+#include<string_view> //Read only strings
+
+std::string_view view = "string stuff"
+std::srting_view view1 = view.substr(0,5)
+
+auto place = "YellowStone" CString
+auto secondPlace = std::string("Everglades") stdString
+auto thirdPlace = "Grand Canyon"s stdString
+
+
+int a = 4;
+decltype(a) b = a;
+If you change the type of a, then the type of b will change as well.
+decltype(auto) c = a; is the same as above.
+decltype(auto) d = (a); d is a reference type
+type_name<decltype(a)>()

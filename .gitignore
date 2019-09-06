@@ -1,0 +1,13 @@
+*.sln
+*.db
+*.suo
+*.vcxproj
+*.filters
+*.user
+*.log
+*.idb
+*.pdb
+*.ipch
+*.tlog
+*.ilk
+*.obj
