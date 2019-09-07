@@ -5,7 +5,9 @@
 class Maze
 {
 private:
-	Cell maze[10][10];
+	const int ROWS = 40;
+	const int COLUMNS = 10;
+	Cell maze[40][10];
 
 public:
 	Maze();

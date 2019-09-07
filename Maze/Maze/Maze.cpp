@@ -2,8 +2,8 @@
 #include <iostream>
 
 Maze::Maze() {
-	for (int i = 0; i < 10; i++) {
-		for (int j = 0; j < 10; j++) {
+	for (int i = 0; i < ROWS; i++) {
+		for (int j = 0; j < COLUMNS; j++) {
 			this->maze[i][j] = Cell();
 		}
 	}
@@ -11,8 +11,8 @@ Maze::Maze() {
 
 
 void Maze::display() {
-	for (int i = 0; i < 10; i++) {
-		for (int j = 0; j < 10; j++) {
+	for (int i = 0; i < ROWS; i++) {
+		for (int j = 0; j < COLUMNS; j++) {
 			std::cout << this->maze[i][j].getChar();
 		}
 		std::cout << std::endl;

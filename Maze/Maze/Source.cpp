@@ -9,7 +9,7 @@ int main() {
 	maze.display();
 
 
-	printChars();
+	//printChars();
 	return 0;
 }
 
