@@ -12,3 +12,16 @@
 *.ilk
 *.obj
 *.opendb
+CMakeHelloWorld/build/cmake_install.cmake
+CMakeHelloWorld/build/.vs/HelloWorld/v16/Solution.VC.db-shm
+CMakeHelloWorld/build/.vs/HelloWorld/v16/Solution.VC.db-wal
+*.depend
+*.stamp
+*.list
+*.check_cache
+*.cmake
+*.bin
+*.c
+CMakeHelloWorld/build/CMakeFiles/3.15.3/CompilerIdC/CompilerIdC.exe
+*.rule
+*.exe

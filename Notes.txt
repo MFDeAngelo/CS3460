@@ -22,3 +22,70 @@ If you change the type of a, then the type of b will change as well.
 decltype(auto) c = a; is the same as above.
 decltype(auto) d = (a); d is a reference type
 type_name<decltype(a)>()
+
+
+Person employees[10]; //Makes 10 person instances using the default constructor.
+
+
+Standard Array:
+#include <array>
+std::array<int, 10> myArray;
+myArray[0] = 1;
+int size = myArray.size();
+std::array<std::string, 2> cities = {"New York", "Los Angeles"}
+
+
+Standard Vector
+include <vector>
+std::vector<int> primes; //or primes(4); to initialize size.
+primes.push_back(2);
+.insert(0,7)
+.erase(0)
+
+
+Random Numbers
+1. Random Device
+  -Hardware
+  -Pseudo random number generator
+2. Random Number Engine
+  -Seed
+  -Pseudo random number generator
+3. Random Number Distributions
+  -Uniform
+  -Normal
+  -Log normal
+  -Bernouli
+  -Poisson
+
+<include <random>
+std::random_device rd;
+std::default_random_engine(rd());
+auto number = engine();
+std::uniform_real_distribution dist(0.0, 1.0);
+number = dist(engine)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
