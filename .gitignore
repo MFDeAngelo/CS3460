@@ -25,3 +25,5 @@ CMakeHelloWorld/build/.vs/HelloWorld/v16/Solution.VC.db-wal
 CMakeHelloWorld/build/CMakeFiles/3.15.3/CompilerIdC/CompilerIdC.exe
 *.rule
 *.exe
+*.db-shm
+*.db-wal
