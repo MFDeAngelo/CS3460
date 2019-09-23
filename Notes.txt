@@ -66,9 +66,18 @@ number = dist(engine)
 
 
 
+double goldenRatio = 1.61;
+double pi = 3.14;
+
+double& alias = goldenRatio; Does not take up memory to alias. Just another name for goldenRatio
 
 
-
+Put namespaces in both header and cpp.
+namespace usu
+{
+//Code.
+}
+namespace lil = usu::cs3460;
 
 
 
