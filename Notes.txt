@@ -82,6 +82,16 @@ namespace lil = usu::cs3460;
 
 
 
+ASSERT_EQ(computed, 8); Tests equality. If fails, then the test stops
+ASSERT_LE(computed, 6); Tests less than or equal to
+EXPECT_EQ(computed, 8); Tests equality. If fails, then records failure and continues
+ASSERT_FLOAT_EQ(computed, expected) within four of last digit.
+ASSERT_NEAR(computed, expected, absoluteError)
+
+
+
+
+
 
 
 
