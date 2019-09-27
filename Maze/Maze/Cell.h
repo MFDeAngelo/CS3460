@@ -4,6 +4,7 @@
 class Cell
 {
 public:
+	Cell(int randomvalue);
 	Cell();
 	~Cell();
 	char getChar();

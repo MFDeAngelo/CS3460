@@ -8,7 +8,7 @@ int main() {
 	Maze maze = Maze();
 	maze.display();
 
-
+	maze.showData();
 	//printChars();
 	return 0;
 }

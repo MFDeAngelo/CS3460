@@ -1,4 +1,5 @@
 #include <stdlib.h> 
+#include <iostream>
 #include "Cell.h"
 
 
@@ -19,12 +20,26 @@ bool Cell::getDown() {
 }
 
 
-Cell::Cell()
+Cell::Cell() {
+	this->structure = ' ';
+	this->left = false;
+	this->up = false;
+	this->right = false;
+	this->down = false;
+}
+
+
+Cell::Cell(int randomValue)
 {
-	int randomValue = rand() % 12;
 	if (randomValue == 0) this->structure = ' ';
 	else if (randomValue < 5) this->structure = randomValue + 184;
 	else this->structure = randomValue + 195;
+
+
+	this->left = false;
+	this->up = false;
+	this->right = false;
+	this->down = false;
 
 	switch(randomValue)
 	{
