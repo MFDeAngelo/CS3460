@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/matthew/Desktop/classes/CS3460/Assignment 3 - Google Test/TestDistributions.cpp
+distributions.hpp
+/home/matthew/Desktop/classes/CS3460/Assignment 3 - Google Test/distributions.hpp
+gtest/gtest.h
+/home/matthew/Desktop/classes/CS3460/Assignment 3 - Google Test/gtest/gtest.h
+numeric
+-
+
+/home/matthew/Desktop/classes/CS3460/Assignment 3 - Google Test/distributions.cpp
+distributions.hpp
+/home/matthew/Desktop/classes/CS3460/Assignment 3 - Google Test/distributions.hpp
+iomanip
+-
+iostream
+-
+random
+-
+vector
+-
+
+/home/matthew/Desktop/classes/CS3460/Assignment 3 - Google Test/distributions.hpp
+string
+-
+vector
+-
+

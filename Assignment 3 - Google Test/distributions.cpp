@@ -48,10 +48,10 @@ std::vector<DistributionPair> generateNormalDistribution(std::uint32_t howMany, 
     for (unsigned int i = 0; i < howMany; i++)
     {
         int index = static_cast<int>(normalDist(engine)) - min;
-        if (index >= results.size())
-            index = static_cast<int>(results.size()) - 1;
         if (index < 0)
             index = 0;
+        else if (static_cast<unsigned int>(index) >= results.size())
+            index = static_cast<int>(results.size()) - 1;
         results[index].count++;
     }
 
@@ -74,7 +74,7 @@ std::vector<DistributionPair> generatePoissonDistribution(std::uint32_t howMany,
     for (unsigned int i = 0; i < howMany; i++)
     {
         int index = static_cast<int>(poisson(engine));
-        if (index >= 0 && index < results.size())
+        //if (index >= 0 && index < results.size())
             results[index].count++;
     }
 
@@ -84,7 +84,7 @@ std::vector<DistributionPair> generatePoissonDistribution(std::uint32_t howMany,
 void plotDistribution(std::string title, const std::vector<DistributionPair>& distribution, const std::uint8_t maxPlotLineSize)
 {
     unsigned int max = 0;
-    for (int i = 0; i < distribution.size(); i++)
+    for (unsigned int i = 0; i < distribution.size(); i++)
     {
         if (distribution[i].count > max)
         {
