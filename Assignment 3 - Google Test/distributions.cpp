@@ -95,7 +95,7 @@ void plotDistribution(std::string title, const std::vector<DistributionPair>& di
     std::cout << title << std::endl;
     for (unsigned int i = 0; i < distribution.size(); i++)
     {
-        std::cout << "[" << std::setw(3) << std::right << distribution[i].minValue << "," << std::setw(3) << std::right << distribution[i].maxValue << "] : " << std::string(distribution[i].count * maxPlotLineSize / max, '*') << std::endl;
+        std::cout << "[" << std::setw(3) << std::right << distribution[i].minValue << ", " << std::setw(3) << std::right << distribution[i].maxValue << "] : " << std::string(distribution[i].count * maxPlotLineSize / max, '*') << std::endl;
     }
     std::cout << std::endl;
 }
