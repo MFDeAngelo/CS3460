@@ -89,6 +89,21 @@ ASSERT_FLOAT_EQ(computed, expected) within four of last digit.
 ASSERT_NEAR(computed, expected, absoluteError)
 
 
+<chrono>
+Duration:
+	xPeriod: Length of time
+	count: How many xPeriods.
+std::chrono::duration<int, std::ratio<1,1>> seconds(10)
+
+
+System_clock: real time since 1/1/1920
+steady_clock: monotonic, starts at boot time
+high_resolution_clock: starts at boot time
+
+
+
+
+
 
 
 
