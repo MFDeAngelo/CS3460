@@ -71,14 +71,12 @@ std::vector<DistributionPair> generatePoissonDistribution(std::uint32_t howMany,
     std::default_random_engine engine(rd());
     std::poisson_distribution poisson(howOften);
 
-    for (unsigned int i = 0; i < howMany; i++)
-    {
+    for (unsigned int i = 0; i < howMany; i++){
         unsigned int index = static_cast<unsigned int>(poisson(engine));
         if (index < results.size())
-            results[index].count++;
-    }
+            results[index].count++;}
 
-    return results;
+    return results; 
 }
 
 void plotDistribution(std::string title, const std::vector<DistributionPair>& distribution, const std::uint8_t maxPlotLineSize)
