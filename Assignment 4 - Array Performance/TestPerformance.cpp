@@ -44,7 +44,7 @@ TEST(OrganPipeArray, DoesGenerateCorrectly)
 TEST(RawArray, DoesInitializeFromStdArrayCorrectly)
 {
     const auto sourceArray = generateRandomArray();
-    int dest[sourceArray.size()];
+    int dest[HOW_MANY_ELEMENTS];
     initializeRawArrayFromStdArray(sourceArray, dest);
 
     for (auto i = 0ul; i < sourceArray.size(); i++)
