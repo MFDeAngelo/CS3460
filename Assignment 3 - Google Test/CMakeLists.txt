@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(RandomDistributions)
+project(GoogleTest)
 
 set(HEADER_FILES distributions.hpp)
 set(SOURCE_FILES

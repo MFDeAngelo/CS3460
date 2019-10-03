@@ -16,6 +16,7 @@ endif()
 
 find_program(CLANG_FORMAT "clang-format")
 if(CLANG_FORMAT)
+	message(${CLANG_FORMAT})
 	unset(SOURCE_FILES_PATHS)
 	foreach(SOURCE_FILE ${SOURCE_FILES})
 		get_source_file_property(WHERE ${SOURCE_FILE} LOCATION)
