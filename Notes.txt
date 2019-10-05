@@ -96,7 +96,7 @@ Duration:
 std::chrono::duration<int, std::ratio<1,1>> seconds(10)
 
 
-System_clock: real time since 1/1/1920
+System_clock: real time since 1/1/1970
 steady_clock: monotonic, starts at boot time
 high_resolution_clock: starts at boot time
 

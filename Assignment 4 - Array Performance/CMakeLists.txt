@@ -21,19 +21,16 @@ set(EXECUTABLES
 	ArrayPerformance)
 
 
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-    target_compile_options(ArrayPerformance PRIVATE /W4 /permissive-) #/WX
-elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-	target_compile_options(ArrayPerformance PRIVATE -Wall -Wextra -pedantic -Werror)
-endif()
 
+foreach(EXECUTABLE ${EXECUTABLES})
+	if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+		set_target_properties(${EXECUTABLE} PROPERTIES LINK_FLAGS "/STACK:10000000")
+	    target_compile_options(${EXECUTABLE} PRIVATE /W4 /permissive-) #/WX
+	elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+		target_compile_options(${EXECUTABLE} PRIVATE -Wall -Wextra -pedantic -Werror -Wl,--stack,1000)
+	endif()
+endforeach()
 
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-	set_target_properties(UnitTestRunner PROPERTIES LINK_FLAGS "/STACK:10000000")
-    target_compile_options(UnitTestRunner PRIVATE /W4 /permissive-) #/WX
-elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-	target_compile_options(UnitTestRunner PRIVATE -Wall -Wextra -pedantic -Werror -Wl,--stack,1000)
-endif()
 
 find_program(CLANG_FORMAT "clang-format")
 if(CLANG_FORMAT)

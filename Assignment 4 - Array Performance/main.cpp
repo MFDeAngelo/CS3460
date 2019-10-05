@@ -29,19 +29,9 @@ int main()
     SourceArray rotatedArray = sortedArray;
     std::rotate(rotatedArray.begin(), rotatedArray.begin() + 1, rotatedArray.end());
 
-    int rawArray[25];
-    initializeRawArrayFromStdArray(rotatedArray, rawArray);
-    std::sort(rawArray, rawArray + 25);
-
-    for (int i = 0; i < 25; i++)
-    {
-        std::cout << rotatedArray[i] << std::endl;
-    }
-
-    for (int i = 0; i < 25; i++)
-    {
-        std::cout << rawArray[i] << std::endl;
-    }
+    evaluateRawArray(randomArray, sortedArray, reversedArray, organPipeArray, rotatedArray);
+    evaluateStdArray(randomArray, sortedArray, reversedArray, organPipeArray, rotatedArray);
+    evaluateStdVector(randomArray, sortedArray, reversedArray, organPipeArray, rotatedArray);
 
     return 0;
 }
