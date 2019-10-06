@@ -12,7 +12,7 @@ int main()
     std::uniform_int_distribution dist(-10'000'000, 10'000'000);
 
     SourceArray randomArray = {};
-    for (int i = 0; i < HOW_MANY_ELEMENTS; i++)
+    for (unsigned int i = 0; i < HOW_MANY_ELEMENTS; i++)
     {
         randomArray[i] = dist(engine);
     }

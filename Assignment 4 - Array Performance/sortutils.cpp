@@ -1,5 +1,6 @@
 #include "sortutils.hpp"
 
+#include <algorithm>
 #include <array>
 #include <chrono>
 #include <iostream>
@@ -7,7 +8,7 @@
 
 void initializeRawArrayFromStdArray(const std::array<int, HOW_MANY_ELEMENTS>& source, int dest[])
 {
-    for (int i = 0; i < HOW_MANY_ELEMENTS; i++)
+    for (unsigned int i = 0; i < HOW_MANY_ELEMENTS; i++)
     {
         dest[i] = source[i];
     }
@@ -15,7 +16,7 @@ void initializeRawArrayFromStdArray(const std::array<int, HOW_MANY_ELEMENTS>& so
 
 void organPipeStdArray(std::array<int, HOW_MANY_ELEMENTS>& data)
 {
-    for (int i = 0; i < HOW_MANY_ELEMENTS / 2; i++)
+    for (unsigned int i = 0; i < HOW_MANY_ELEMENTS / 2; i++)
     {
         data[HOW_MANY_ELEMENTS - 1 - i] = data[i];
     }
@@ -24,7 +25,7 @@ void organPipeStdArray(std::array<int, HOW_MANY_ELEMENTS>& data)
 void evaluateRawArray(const SourceArray& random, const SourceArray& sorted, const SourceArray& reversed, const SourceArray& organPipe, const SourceArray& rotated)
 {
     std::chrono::microseconds time1(0);
-    for (int i = 0; i < HOW_MANY_TIMES; i++)
+    for (unsigned int i = 0; i < HOW_MANY_TIMES; i++)
     {
         int rawArray[HOW_MANY_ELEMENTS];
         initializeRawArrayFromStdArray(random, rawArray);
@@ -35,7 +36,7 @@ void evaluateRawArray(const SourceArray& random, const SourceArray& sorted, cons
     }
 
     std::chrono::microseconds time2(0);
-    for (int i = 0; i < HOW_MANY_TIMES; i++)
+    for (unsigned int i = 0; i < HOW_MANY_TIMES; i++)
     {
         int rawArray[HOW_MANY_ELEMENTS];
         initializeRawArrayFromStdArray(sorted, rawArray);
@@ -46,7 +47,7 @@ void evaluateRawArray(const SourceArray& random, const SourceArray& sorted, cons
     }
 
     std::chrono::microseconds time3(0);
-    for (int i = 0; i < HOW_MANY_TIMES; i++)
+    for (unsigned int i = 0; i < HOW_MANY_TIMES; i++)
     {
         int rawArray[HOW_MANY_ELEMENTS];
         initializeRawArrayFromStdArray(reversed, rawArray);
@@ -57,7 +58,7 @@ void evaluateRawArray(const SourceArray& random, const SourceArray& sorted, cons
     }
 
     std::chrono::microseconds time4(0);
-    for (int i = 0; i < HOW_MANY_TIMES; i++)
+    for (unsigned int i = 0; i < HOW_MANY_TIMES; i++)
     {
         int rawArray[HOW_MANY_ELEMENTS];
         initializeRawArrayFromStdArray(organPipe, rawArray);
@@ -68,7 +69,7 @@ void evaluateRawArray(const SourceArray& random, const SourceArray& sorted, cons
     }
 
     std::chrono::microseconds time5(0);
-    for (int i = 0; i < HOW_MANY_TIMES; i++)
+    for (unsigned int i = 0; i < HOW_MANY_TIMES; i++)
     {
         int rawArray[HOW_MANY_ELEMENTS];
         initializeRawArrayFromStdArray(rotated, rawArray);
@@ -90,7 +91,7 @@ void evaluateRawArray(const SourceArray& random, const SourceArray& sorted, cons
 void evaluateStdArray(const SourceArray& random, const SourceArray& sorted, const SourceArray& reversed, const SourceArray& organPipe, const SourceArray& rotated)
 {
     std::chrono::microseconds time1(0);
-    for (int i = 0; i < HOW_MANY_TIMES; i++)
+    for (unsigned int i = 0; i < HOW_MANY_TIMES; i++)
     {
         SourceArray array = random;
         auto start = std::chrono::steady_clock::now();
@@ -100,7 +101,7 @@ void evaluateStdArray(const SourceArray& random, const SourceArray& sorted, cons
     }
 
     std::chrono::microseconds time2(0);
-    for (int i = 0; i < HOW_MANY_TIMES; i++)
+    for (unsigned int i = 0; i < HOW_MANY_TIMES; i++)
     {
         SourceArray array = sorted;
         auto start = std::chrono::steady_clock::now();
@@ -110,7 +111,7 @@ void evaluateStdArray(const SourceArray& random, const SourceArray& sorted, cons
     }
 
     std::chrono::microseconds time3(0);
-    for (int i = 0; i < HOW_MANY_TIMES; i++)
+    for (unsigned int i = 0; i < HOW_MANY_TIMES; i++)
     {
         SourceArray array = reversed;
         auto start = std::chrono::steady_clock::now();
@@ -120,7 +121,7 @@ void evaluateStdArray(const SourceArray& random, const SourceArray& sorted, cons
     }
 
     std::chrono::microseconds time4(0);
-    for (int i = 0; i < HOW_MANY_TIMES; i++)
+    for (unsigned int i = 0; i < HOW_MANY_TIMES; i++)
     {
         SourceArray array = organPipe;
         auto start = std::chrono::steady_clock::now();
@@ -130,7 +131,7 @@ void evaluateStdArray(const SourceArray& random, const SourceArray& sorted, cons
     }
 
     std::chrono::microseconds time5(0);
-    for (int i = 0; i < HOW_MANY_TIMES; i++)
+    for (unsigned int i = 0; i < HOW_MANY_TIMES; i++)
     {
         SourceArray array = rotated;
         auto start = std::chrono::steady_clock::now();
@@ -139,7 +140,7 @@ void evaluateStdArray(const SourceArray& random, const SourceArray& sorted, cons
         time5 += std::chrono::duration_cast<std::chrono::microseconds>(end - start);
     }
 
-    std::cout << "---Raw Array Performance---" << std::endl;
+    std::cout << "---std::array Performance---" << std::endl;
     std::cout << "Random Time     : " << time1.count() / 1000 << " ms" << std::endl;
     std::cout << "Sorted Time     : " << time2.count() / 1000 << " ms" << std::endl;
     std::cout << "Reversed Time   : " << time3.count() / 1000 << " ms" << std::endl;
@@ -151,7 +152,7 @@ void evaluateStdArray(const SourceArray& random, const SourceArray& sorted, cons
 void evaluateStdVector(const SourceArray& random, const SourceArray& sorted, const SourceArray& reversed, const SourceArray& organPipe, const SourceArray& rotated)
 {
     std::chrono::microseconds time1(0);
-    for (int i = 0; i < HOW_MANY_TIMES; i++)
+    for (unsigned int i = 0; i < HOW_MANY_TIMES; i++)
     {
         std::vector<int> array(random.begin(), random.end());
         auto start = std::chrono::steady_clock::now();
@@ -161,7 +162,7 @@ void evaluateStdVector(const SourceArray& random, const SourceArray& sorted, con
     }
 
     std::chrono::microseconds time2(0);
-    for (int i = 0; i < HOW_MANY_TIMES; i++)
+    for (unsigned int i = 0; i < HOW_MANY_TIMES; i++)
     {
         std::vector<int> array(sorted.begin(), sorted.end());
         auto start = std::chrono::steady_clock::now();
@@ -171,7 +172,7 @@ void evaluateStdVector(const SourceArray& random, const SourceArray& sorted, con
     }
 
     std::chrono::microseconds time3(0);
-    for (int i = 0; i < HOW_MANY_TIMES; i++)
+    for (unsigned int i = 0; i < HOW_MANY_TIMES; i++)
     {
         std::vector<int> array(reversed.begin(), reversed.end());
         auto start = std::chrono::steady_clock::now();
@@ -181,7 +182,7 @@ void evaluateStdVector(const SourceArray& random, const SourceArray& sorted, con
     }
 
     std::chrono::microseconds time4(0);
-    for (int i = 0; i < HOW_MANY_TIMES; i++)
+    for (unsigned int i = 0; i < HOW_MANY_TIMES; i++)
     {
         std::vector<int> array(organPipe.begin(), organPipe.end());
         auto start = std::chrono::steady_clock::now();
@@ -191,7 +192,7 @@ void evaluateStdVector(const SourceArray& random, const SourceArray& sorted, con
     }
 
     std::chrono::microseconds time5(0);
-    for (int i = 0; i < HOW_MANY_TIMES; i++)
+    for (unsigned int i = 0; i < HOW_MANY_TIMES; i++)
     {
         std::vector<int> array(rotated.begin(), rotated.end());
         auto start = std::chrono::steady_clock::now();
@@ -200,7 +201,7 @@ void evaluateStdVector(const SourceArray& random, const SourceArray& sorted, con
         time5 += std::chrono::duration_cast<std::chrono::microseconds>(end - start);
     }
 
-    std::cout << "---Raw Array Performance---" << std::endl;
+    std::cout << "---std::vector Performance---" << std::endl;
     std::cout << "Random Time     : " << time1.count() / 1000 << " ms" << std::endl;
     std::cout << "Sorted Time     : " << time2.count() / 1000 << " ms" << std::endl;
     std::cout << "Reversed Time   : " << time3.count() / 1000 << " ms" << std::endl;
