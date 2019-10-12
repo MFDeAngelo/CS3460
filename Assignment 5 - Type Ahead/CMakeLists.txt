@@ -1,33 +1,32 @@
 cmake_minimum_required(VERSION 3.10)
 project(ArrayPerformance)
 
-set(HEADER_FILES sortutils.hpp)
+set(HEADER_FILES WordTree.hpp)
 set(SOURCE_FILES
-	sortutils.cpp)
+	WordTree.cpp)
 set(ALL_FILES
 	main.cpp
-	TestPerformance.cpp
+	TestWordTree.cpp
 	${SOURCE_FILES}
 	${HEADER_FILES})
 
-add_executable(ArrayPerformance main.cpp ${SOURCE_FILES} ${HEADER_FILES})
-set_property(TARGET ArrayPerformance PROPERTY CXX_STANDARD 17)
+add_executable(TypeAhead main.cpp ${SOURCE_FILES} ${HEADER_FILES})
+set_property(TARGET TypeAhead PROPERTY CXX_STANDARD 17)
 
-add_executable(UnitTestRunner TestPerformance.cpp ${SOURCE_FILES} ${HEADER_FILES})
+add_executable(UnitTestRunner TestWordTree.cpp ${SOURCE_FILES} ${HEADER_FILES})
 set_property(TARGET UnitTestRunner PROPERTY CXX_STANDARD 17)
 
 set(EXECUTABLES
 	UnitTestRunner
-	ArrayPerformance)
+	TypeAhead)
 
 
 
 foreach(EXECUTABLE ${EXECUTABLES})
 	if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-		set_target_properties(${EXECUTABLE} PROPERTIES LINK_FLAGS "/STACK:10000000")
-	    target_compile_options(${EXECUTABLE} PRIVATE /W4 /permissive-) #/WX
+		target_compile_options(${EXECUTABLE} PRIVATE /W4 /permissive-) #/WX
 	elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-		target_compile_options(${EXECUTABLE} PRIVATE -Wall -Wextra -pedantic -Werror -Wl,--stack,1000000)
+		target_compile_options(${EXECUTABLE} PRIVATE -Wall -Wextra -pedantic -Werror)
 	endif()
 endforeach()
 
