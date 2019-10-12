@@ -27,7 +27,7 @@ foreach(EXECUTABLE ${EXECUTABLES})
 		set_target_properties(${EXECUTABLE} PROPERTIES LINK_FLAGS "/STACK:10000000")
 	    target_compile_options(${EXECUTABLE} PRIVATE /W4 /permissive-) #/WX
 	elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-		target_compile_options(${EXECUTABLE} PRIVATE -Wall -Wextra -pedantic -Werror -Wl,--stack,1000000)
+		target_compile_options(${EXECUTABLE} PRIVATE -O3 -Wall -Wextra -pedantic -Werror -Wl,--stack,1000)
 	endif()
 endforeach()
 
