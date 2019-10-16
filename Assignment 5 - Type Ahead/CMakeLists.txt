@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.10)
-project(ArrayPerformance)
+project(TypeAhead)
 
-set(HEADER_FILES WordTree.hpp)
+set(HEADER_FILES 
+	WordTree.hpp
+	rlutil.h)
 set(SOURCE_FILES
 	WordTree.cpp)
 set(ALL_FILES
@@ -41,7 +43,7 @@ if(CLANG_FORMAT)
 
 	add_custom_target(ClangFormat COMMAND ${CLANG_FORMAT} -i -style=file ${SOURCE_FILES_PATHS})
 
-	add_dependencies(ArrayPerformance ClangFormat)
+	add_dependencies(TypeAhead ClangFormat)
 endif()
 
 
