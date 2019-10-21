@@ -18,12 +18,15 @@ int main()
     std::cout << input << "\n\n--- prediction ---\n";
     while (true)
     {
-        rlutil::locate(1 + input.length(), 1);
+        rlutil::locate(1 + static_cast<int>(input.length()), 1);
         auto key = rlutil::getkey();
         if (key == rlutil::KEY_BACKSPACE)
             input = input.substr(0, input.length() - 1);
-        else if (std::isalpha(static_cast<char>(key)))
+        else if (std::isalpha(key))
+        {
             input += static_cast<char>(key);
+        }
+
         rlutil::cls();
         std::cout << input << "\n\n--- prediction ---\n";
         std::vector<std::string> predicted = wordTree.predict(input, static_cast<std::uint8_t>(rlutil::trows() - 4));
