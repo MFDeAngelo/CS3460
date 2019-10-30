@@ -46,7 +46,7 @@ int main()
     if (input == 4)
     {
         PatternGlider glider;
-        lifeSimulator.insertPattern(glider, 50, 10);
+        lifeSimulator.insertPattern(glider, 5, 2);
     }
     if (input == 5)
     {
