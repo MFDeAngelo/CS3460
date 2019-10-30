@@ -19,5 +19,5 @@ bool PatternGlider::getCell(std::uint8_t x, std::uint8_t y) const
     if (x == 3 && y > 0 && y < 4)
         return true;
 	
-	return false;
+    return false;
 }
