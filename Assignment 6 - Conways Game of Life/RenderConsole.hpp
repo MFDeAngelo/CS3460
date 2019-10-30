@@ -6,7 +6,5 @@
 class RenderConsole : public Renderer
 {
   public:
-    RenderConsole();
-
     void render(const LifeSimulator& simulation);
 };
