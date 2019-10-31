@@ -36,6 +36,6 @@ bool PatternGosperGliderGun::getCell(std::uint8_t x, std::uint8_t y) const
         return true;
     if ((x == 35 || x == 36) && (y == 3 || y == 4))
         return true;
-	
+
     return false;
 }

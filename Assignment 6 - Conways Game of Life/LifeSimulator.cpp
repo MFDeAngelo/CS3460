@@ -10,9 +10,9 @@ LifeSimulator::LifeSimulator(std::uint8_t sizeX, std::uint8_t sizeY) :
 
 void LifeSimulator::insertPattern(const Pattern& pattern, std::uint8_t startX, std::uint8_t startY)
 {
-    for (unsigned int i = 0; i < pattern.getSizeX(); i++)
+    for (uint8_t i = 0; i < pattern.getSizeX(); i++)
     {
-        for (unsigned int j = 0; j < pattern.getSizeY(); j++)
+        for (uint8_t j = 0; j < pattern.getSizeY(); j++)
         {
             grid[i + startX][j + startY] = pattern.getCell(i, j);
         }
@@ -32,15 +32,15 @@ void LifeSimulator::update()
                 if (j != 0)
                 {
                     neighbors += static_cast<short>(grid[i - 1][j - 1]);
-				}
+                }
                 if (j != sizeY - 1)
                 {
                     neighbors += static_cast<short>(grid[i - 1][j + 1]);
                 }
                 neighbors += static_cast<short>(grid[i - 1][j]);
-			}
+            }
 
-			if (i != sizeX-1)
+            if (i != sizeX - 1)
             {
                 if (j != 0)
                 {
@@ -53,22 +53,19 @@ void LifeSimulator::update()
                 neighbors += static_cast<short>(grid[i + 1][j]);
             }
 
-			if (j != 0)
+            if (j != 0)
             {
                 neighbors += static_cast<short>(grid[i][j - 1]);
             }
 
-			if (j != sizeY - 1)
+            if (j != sizeY - 1)
             {
                 neighbors += static_cast<short>(grid[i][j + 1]);
             }
 
-			if ((neighbors == 2 && grid[i][j]) || neighbors == 3)
+            if ((neighbors == 2 && grid[i][j]) || neighbors == 3)
                 temp[i][j] = true;
-            
-			
-
-		}
-	}
+        }
+    }
     grid = temp;
 }

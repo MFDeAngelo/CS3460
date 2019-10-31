@@ -1,8 +1,8 @@
 #pragma once
 #include "Pattern.hpp"
 
-#include <vector>
 #include <cstdint>
+#include <vector>
 
 class LifeSimulator
 {

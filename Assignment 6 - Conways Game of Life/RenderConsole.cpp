@@ -2,14 +2,13 @@
 
 #include "LifeSimulator.hpp"
 
-
 void RenderConsole::render(const LifeSimulator& simulation)
 {
     rlutil::cls();
 
-    for (int i = 0; i < simulation.getSizeX(); i++)
+    for (uint8_t i = 0; i < simulation.getSizeX(); i++)
     {
-        for (int j = 0; j < simulation.getSizeY(); j++)
+        for (uint8_t j = 0; j < simulation.getSizeY(); j++)
         {
             if (simulation.getCell(i, j))
             {
@@ -18,5 +17,4 @@ void RenderConsole::render(const LifeSimulator& simulation)
             }
         }
     }
-
 }

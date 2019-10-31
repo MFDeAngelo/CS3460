@@ -1,5 +1,6 @@
 #pragma once
 #include "Pattern.hpp"
+
 #include <cstdint>
 
 class PatternAcorn : public Pattern
