@@ -101,7 +101,7 @@ steady_clock: monotonic, starts at boot time
 high_resolution_clock: starts at boot time
 
 
-
+constexp auto r = x * y; evaluates at compile time
 
 
 
