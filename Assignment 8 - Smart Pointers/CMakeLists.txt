@@ -1,7 +1,10 @@
 cmake_minimum_required(VERSION 3.10)
 project(SharedPTR)
 
-set(HEADER_FILES shared_ptr.hpp)
+set(HEADER_FILES 
+	shared_ptr.hpp
+	unique_ptr.hpp)
+
 set(ALL_FILES
 	main.cpp
 	TestMemory.cpp

@@ -9,8 +9,16 @@ namespace usu
 
 	public:
         shared_ptr(T* ptr);
-      shared_ptr(const T*& ptr);
-			
+      shared_ptr(const T*& rhs);
+        shared_ptr(const T*&& rhs);
+      ~shared_ptr();
+        shared_ptr<T> operator=(shared_ptr<T> ptr);
+      shared_ptr<T> operator=(const shared_ptr<T> ptr&&);
+        T* operator->();
+      unsigned int use_count();
+        T operator(*)();
+      T* get();
+        *int use_count();
 	
 	};
 
@@ -32,6 +40,64 @@ namespace usu
 	  }
 
 
+	template <typename T>
+      shared_ptr<T>::shared_ptr(const T*&& rhs)
+      {
+          rhs.managed_ptr = managed_ptr;
+          rhs.count = count;
+	  }
+
+	  template<typename T>
+	  shared_ptr<T>::~shared_ptr() {
+          if (*count == 0)
+          {
+              delete count;
+              delete managed_ptr;
+		  }
+          else
+          {
+              *count = *count - 1;
+		  }
+	  }
+
+	  template<typename T>
+	  shared_ptr<T> shared_ptr<T>::operator=(const shared_ptr<T> ptr) {
+          this->managed_ptr = ptr.managed_ptr;
+          this->count = ptr.count;
+          *count = *count + 1;
+	  }
+
+	  template <typename T>
+      shared_ptr<T> shared_ptr<T>::operator=(const shared_ptr<T> ptr&&)
+      {
+          this->managed_ptr = ptr.managed_ptr;
+          this->count = ptr.count;
+      }
+
+	  template <typename T>
+	  T* shared_ptr<T>::operator->() {
+          return this->managed_ptr;
+	  }
+
+	  template <typename T>
+	  unsigned int shared_ptr<T>::use_count() {
+          return count*;
+	  }
+
+	  template <typename T>
+	  T shared_ptr<T>::operator(*)() {
+          return this->managed_ptr*;
+	  }
+
+	  template <typename T>
+	  T* shared_ptr<T>::get() {
+          return managed_ptr;
+	  }
+
+	  template <typename T>
+	  *int shared_ptr<T>::use_count() {
+          return count;
+	  }
 
 }
 
@@ -39,18 +105,6 @@ namespace usu
 
 Write a templated shared_ptr class, contained with a usu namespace according to the following specifications.
 
-Constructors
-Copy constructor : Make a copy of the shared_ptr and increments the reference count.
-Move constructor : Moves the shared_ptr, does not increment the reference count.
-Destructor : decrements the reference count.  If the reference count goes to 0, cleans up an allocated memory.
-Operators
-assignment operator : Copies the shared_ptr into the destination, increments the reference count.
-move assignment operator : Moves the shared_ptr into the destination, does not increment the reference count.
-pointer operator (->) : Returns a pointer to the managed raw pointer.
-dereference operator (*) : Dereferences the managed raw pointer, returning the value at the memory location.
-Other methods
-get : Returns a pointer to the managed pointer.
-use_count : Returns the reference count.
 If that isn't enough, make another shared_ptr class for arrays!  A few differences between this class and the previous one.
 
 The type declaration will start like...
