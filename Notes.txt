@@ -105,8 +105,11 @@ constexp auto r = x * y; evaluates at compile time
 
 
 
+template <unsigned int R, typename T>
+repeat(T ttype){ ... }
 
-
+can call as:
+repeat<4>("hello world");
 
 
 
