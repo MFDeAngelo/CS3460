@@ -56,6 +56,6 @@ namespace usu
     using gram = weight<std::ratio<1, 1>, double>;
     using pound = weight<std::ratio<453592, 1000>, double>;
     using ounce = weight<std::ratio<2835, 100>, double>;
-    using ton = weight<std::ratio<1102, 1000000000>, double>;
+    using ton = weight<std::ratio<907185, 1>, double>;
 
 } // namespace usu
