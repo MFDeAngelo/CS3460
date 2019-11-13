@@ -2,9 +2,9 @@
 #include "shared_ptr.hpp"
 
 #include "gtest/gtest.h"
+#include <array>
 #include <memory>
 #include <string>
-#include <array>
 
 class MyClass
 {

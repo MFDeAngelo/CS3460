@@ -113,7 +113,16 @@ repeat<4>("hello world");
 
 
 
+Variatic template code:
+template <typename T, typename Ts>
+T max(T x, Ts... ts){
+	return (x>max(ts..) ? x : max(ts...));
+}
 
+template <typename T>
+T max(T x) {return x;}
+
+sizeof...(Ts) //Reports how many types.
 
 
 

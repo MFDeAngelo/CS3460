@@ -47,13 +47,12 @@ namespace usu
     template <typename newWeight, typename oldWeight>
     newWeight weight_cast(oldWeight w)
     {
-
-        newWeight result(static_cast<typename newWeight::Ct>(w.count() * static_cast<double>(newWeight::Ratio::den * oldWeight::Ratio::num) / static_cast<double>(newWeight::Ratio::num * oldWeight::Ratio::den)));
+        newWeight result(static_cast<typename newWeight::Ct>(w.count() * static_cast<double>(oldWeight::Ratio::num) * static_cast<double>(newWeight::Ratio::den) / static_cast<double>(oldWeight::Ratio::den) / static_cast<double>(newWeight::Ratio::num)));
         return result;
     }
 
     using microgram = weight<std::ratio<1, 1000000>, uint64_t>;
-    using gram = weight<std::ratio<1, 1>, double>;
+    using gram = weight<std::ratio<1, 1>, uint64_t>;
     using pound = weight<std::ratio<453592, 1000>, double>;
     using ounce = weight<std::ratio<2835, 100>, double>;
     using ton = weight<std::ratio<907185, 1>, double>;
