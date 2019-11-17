@@ -127,6 +127,29 @@ sizeof...(Ts) //Reports how many types.
 
 
 
+Also,
+
+template <typename T, typename Ts>
+T max(T x, Ts... ts){
+	if constexpr (sizeof...(Ts) > 0){
+		return (x>max(ts..) ? x : max(ts...));
+	}
+	return x;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

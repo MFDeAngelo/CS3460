@@ -1,3 +1,5 @@
+#include <iostream>
+
 namespace usu
 {
     template <typename T>
@@ -9,11 +11,11 @@ namespace usu
 
       public:
         shared_ptr(T* ptr);
-        shared_ptr(const T*& rhs);
-        shared_ptr(const T*&& rhs);
+        shared_ptr(const shared_ptr<T>& rhs);
+        shared_ptr(const shared_ptr<T>&& rhs);
         ~shared_ptr();
-        shared_ptr<T> operator=(const shared_ptr<T>& ptr);
-        shared_ptr<T>& operator=(shared_ptr<T>& ptr);
+        shared_ptr<T>& operator=(const shared_ptr<T>& ptr);
+        shared_ptr<T>& operator=(const shared_ptr<T>&& ptr);
         T* operator->();
         unsigned int use_count();
         T operator*();
@@ -23,52 +25,51 @@ namespace usu
     template <typename T>
     shared_ptr<T>::shared_ptr(T* ptr) :
         managed_ptr(ptr),
-        count(new unsigned int(0))
+        count(new unsigned int(1))
     {
     }
 
     template <typename T>
-    shared_ptr<T>::shared_ptr(const T*& rhs)
+    shared_ptr<T>::shared_ptr(const shared_ptr<T>& rhs)
     {
-        rhs.managed_ptr = managed_ptr;
-        rhs.count = count;
+        managed_ptr = rhs.managed_ptr;
+        count = rhs.count;
         *count = *count + 1;
     }
 
     template <typename T>
-    shared_ptr<T>::shared_ptr(const T*&& rhs)
+    shared_ptr<T>::shared_ptr(const shared_ptr<T>&& rhs)
     {
-        rhs.managed_ptr = managed_ptr;
-        rhs.count = count;
+        managed_ptr = rhs.managed_ptr;
+        count = rhs.count;
     }
 
     template <typename T>
     shared_ptr<T>::~shared_ptr()
     {
+        *count = *count - 1;
         if (*count == 0)
         {
             delete count;
             delete managed_ptr;
         }
-        else
-        {
-            *count = *count - 1;
-        }
     }
 
     template <typename T>
-    shared_ptr<T> shared_ptr<T>::operator=(const shared_ptr<T>& ptr)
+    shared_ptr<T>& shared_ptr<T>::operator=(const shared_ptr<T>& ptr)
     {
         this->managed_ptr = ptr.managed_ptr;
         this->count = ptr.count;
         *count = *count + 1;
+        return *this;
     }
 
     template <typename T>
-    shared_ptr<T>& shared_ptr<T>::operator=(shared_ptr<T>& ptr)
+    shared_ptr<T>& shared_ptr<T>::operator=(const shared_ptr<T>&& ptr)
     {
         this->managed_ptr = ptr.managed_ptr;
         this->count = ptr.count;
+        return *this;
     }
 
     template <typename T>
@@ -95,13 +96,13 @@ namespace usu
         return managed_ptr;
     }
 
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     template <typename T>
     class shared_ptr<T[]>
     {
       private:
-        T[] * managed_ptr;
+        T* managed_ptr;
         unsigned int* count;
         unsigned int n;
 
@@ -110,19 +111,16 @@ namespace usu
         shared_ptr(const T& rhs);
         shared_ptr(const T&& rhs);
         ~shared_ptr();
-        shared_ptr<T[]> operator=(const shared_ptr<T[]> ptr);
+        shared_ptr<T[]> operator=(const shared_ptr<T[]>& ptr);
         shared_ptr<T[]> operator=(shared_ptr<T[]>&& ptr);
-        T operator->();
         unsigned int use_count();
-        T operator*();
-        T get();
         T& operator[](unsigned int i);
         unsigned int size();
     };
 
     template <typename T>
     shared_ptr<T[]>::shared_ptr(T ptr[], unsigned int N) :
-        count(new unsigned int(0)),
+        count(new unsigned int(1)),
         n(N)
     {
         managed_ptr = ptr;
@@ -131,41 +129,39 @@ namespace usu
     template <typename T>
     shared_ptr<T[]>::shared_ptr(const T& rhs)
     {
-        rhs.managed_ptr = managed_ptr;
-        rhs.count = count;
-        rhs.n = n;
+        managed_ptr = rhs.managed_ptr;
+        count = rhs.count;
+        n = rhs.n;
         *count = *count + 1;
     }
 
     template <typename T>
     shared_ptr<T[]>::shared_ptr(const T&& rhs)
     {
-        rhs.managed_ptr = managed_ptr;
-        rhs.count = count;
-        rhs.n = n;
+        managed_ptr = rhs.managed_ptr;
+        count = rhs.count;
+        n = rhs.n;
     }
 
     template <typename T>
     shared_ptr<T[]>::~shared_ptr()
     {
+        *count = *count - 1;
         if (*count == 0)
         {
             delete count;
-            delete managed_ptr;
-        }
-        else
-        {
-            *count = *count - 1;
+            delete[] managed_ptr;
         }
     }
 
     template <typename T>
-    shared_ptr<T[]> shared_ptr<T[]>::operator=(const shared_ptr<T[]> ptr)
+    shared_ptr<T[]> shared_ptr<T[]>::operator=(const shared_ptr<T[]>& ptr)
     {
         this->managed_ptr = ptr.managed_ptr;
         this->count = ptr.count;
         this->n = ptr.n;
         *count = *count + 1;
+        return ptr;
     }
 
     template <typename T>
@@ -174,30 +170,13 @@ namespace usu
         this->managed_ptr = ptr.managed_ptr;
         this->count = ptr.count;
         this->n = ptr.n;
-    }
-
-    template <typename T>
-    T shared_ptr<T[]>::operator->()
-    {
-        return this->managed_ptr;
+        return ptr;
     }
 
     template <typename T>
     unsigned int shared_ptr<T[]>::use_count()
     {
         return *count;
-    }
-
-    template <typename T>
-    T shared_ptr<T[]>::operator*()
-    {
-        return this->*managed_ptr;
-    }
-
-    template <typename T>
-    T shared_ptr<T[]>::get()
-    {
-        return managed_ptr;
     }
 
     template <typename T>
