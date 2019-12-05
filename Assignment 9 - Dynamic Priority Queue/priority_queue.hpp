@@ -88,7 +88,40 @@ namespace usu
           size_type storageSize;
           size_type count;
 
-		  void heapify(unsigned int index);
+		  void heapify(size_type index);
+          void siftDown(int pos);
+
+
+		    // Return true if pos a leaf position, false otherwise
+          bool isLeaf(int pos)
+          {
+              return (pos >= count / 2) && (pos < count);
+          }
+
+          // Return position for left child of pos
+          int leftchild(int pos)
+          {
+              if (pos >= count / 2)
+                  return -1;
+              return 2 * pos + 1;
+          }
+
+          // Return position for right child of pos
+          int rightchild(int pos)
+          {
+              if (pos >= (count - 1) / 2)
+                  return -1;
+              return 2 * pos + 2;
+          }
+
+          // Return position for parent
+          int parent(int pos)
+          {
+              if (pos <= 0)
+                  return -1;
+              return (pos - 1) / 2;
+          }
+
 
 
 
@@ -125,6 +158,7 @@ namespace usu
         Item item(element, priority);
         data[count] = item;
         ++count;
+        /*
         for (int i = count-1; i > 0; --i)
         {
             if (data[i].priority > data[i - 1].priority)
@@ -134,6 +168,7 @@ namespace usu
             else
                 break;
 		}
+		*/
         heapify(0);
 	}
 
@@ -212,7 +247,15 @@ namespace usu
     }
 
 	template <typename T>
-	void priority_queue<T>::heapify(unsigned int index) {
+    void priority_queue<T>::heapify(size_type index)
+    {
+
+		for (int i = 0; i < count; i++)
+        {
+            siftDown(i);
+		}
+
+        /*
         if (index >= count)
             return;
         if (count > (2 * index) + 1) //Could have a bug here...
@@ -231,9 +274,27 @@ namespace usu
         }
         heapify((2 * index) + 1);
         heapify((2 * index) + 2);
+		*/
 
 	}
 
+	template <typename T>
+	  void priority_queue<T>::siftDown(int pos)
+    {
+        if ((pos < 0) || (pos >= count))
+            return; // Illegal position
+        while (!isLeaf(pos))
+        {
+            int j = leftchild(pos);
+            if ((j < (count - 1)) && (data[j].priority < data[j + 1]).priority)
+                j++; // j is now index of child with greater value
+            if (data[pos].priority >= data[pos].priority)
+                return;
+            std::swap(data[pos], data[j]);
+            pos = j; // Move down
+        }
+    }
+	  
 
 }
 
