@@ -45,28 +45,30 @@ namespace usu
           iterator(Item* data) :
               position(0),
               data(data) {}
-          iterator(const iterator& obj)
+          iterator(iterator& obj)
           {
               this->position = obj.position;
               this->data = obj.data;
-
-              obj.data = nullptr;
-              obj.position = 0;
           }
-          iterator(const iterator&& obj)
+
+          iterator(iterator&& obj)
           {
               std::swap(obj.data, this->data);
               std::swap(obj.position, this->position);
           }
 
-          reference operator*() { return data[position]; }
+//          reference operator*() { return data[position]; }
 
 		  iterator operator++();
           iterator operator++(int);
 
+		  
 		  bool operator==(const iterator& rhs);
           bool operator!=(const iterator& rhs);
 
+
+		  
+		  Item operator*();
 		  //priority_queue<T>::Item operator->();
 
         private:
@@ -78,12 +80,15 @@ namespace usu
 
       iterator begin(); 
 	  iterator end();
+      iterator find(T value);
 
 	  private: 
 
 		  std::vector<Item> data;
           size_type storageSize;
           size_type count;
+
+		  void heapify(unsigned int index);
 
 
 
@@ -129,6 +134,7 @@ namespace usu
             else
                 break;
 		}
+        heapify(0);
 	}
 
 	template <typename T>
@@ -159,6 +165,8 @@ namespace usu
         return iterator(count, data.data());
     }
 
+
+
 	template <typename T>
     typename priority_queue<T>::iterator priority_queue<T>::iterator::operator++()
     {
@@ -176,6 +184,13 @@ namespace usu
 	}
 
 	template <typename T>
+    typename priority_queue<T>::Item priority_queue<T>::iterator::operator*()
+    {
+        return data[position];
+	}
+
+
+	template <typename T>
 	bool priority_queue<T>::iterator::operator==(const iterator& rhs) {
         return this->data == rhs.data && this->position == rhs.position;
 	}
@@ -185,27 +200,40 @@ namespace usu
         return !operator==(rhs);
 	}
 
+	template <typename T>
+    typename priority_queue<T>::iterator priority_queue<T>::find(T value)
+    {
+        iterator i = iterator(data.data());
+        while ((*i).value != value && i != end())
+        {
+            i++;
+		}
+        return i;
+    }
 
+	template <typename T>
+	void priority_queue<T>::heapify(unsigned int index) {
+        if (index >= count)
+            return;
+        if (count > (2 * index) + 1) //Could have a bug here...
+        {
+            if (data[index].priority < data[(2 * index) + 1].priority)
+            {
+                std::swap(data[index], data[(2 * index) + 1]);
+			}
+		}
+        if (count > (2 * index) + 2)
+        {
+            if (data[index].priority < data[(2 * index) + 2].priority)
+            {
+                std::swap(data[index], data[(2 * index) + 2]);
+            }
+        }
+        heapify((2 * index) + 1);
+        heapify((2 * index) + 2);
+
+	}
 
 
 }
 
-
-/*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-*/

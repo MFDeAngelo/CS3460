@@ -49,22 +49,36 @@ void simpleExample()
     pq.enqueue("f", 2);
 
 	
+	pq.enqueue("g", 10);
+    pq.enqueue("h", 20);
+    pq.enqueue("i", 30);
+    pq.enqueue("j", 11);
+    pq.enqueue("k", 40);
+    pq.enqueue("l", 21);
 
+
+
+	 
+	/*
     // Example of using the iterator with an std::algorithm, isn't that cool!
     // Find the first value "less than d"
-    auto f = std::find_if(pq.begin(), pq.end(), [](auto value) { return value.value < "d"; });
+    auto f = std::find_if(pq.begin(), pq.end(), [](auto value) {return value.value < "d"; });
+
+	
     if (f != pq.end())
     {
         std::cout << "--- Found item using std::find_if(...): ";
-//        std::cout << f->value << "(" << f->priority << ")" << std::endl;
+        std::cout << f->value << "(" << f->priority << ")" << std::endl;
         std::cout << std::endl;
     }
+	*/
 
-	    /*
+	    
 
     // Simple example of using the methods on the priority queue itself.
     auto a = pq.find("a");
     reportPQ("--- Before ---", pq);
+    /*
     pq.update(a, 5);
     reportPQ("--- After Updating a ---", pq);
     pq.update(pq.find("b"), 3);
