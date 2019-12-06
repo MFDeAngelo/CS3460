@@ -299,9 +299,9 @@ TEST(Update, UpdateItems)
     }
 
     {
-        pq.update(pq.find("a"), 4);
+        pq.update(pq.find("a"), 2);
         auto [value, priority] = *pq.begin();
-        reportPQ("--- Update Items: update a to 4 ---", pq);
+        reportPQ("--- Update Items: update a to 2 ---", pq);
 
         EXPECT_EQ(value, "e");
         EXPECT_EQ(priority, 5u);

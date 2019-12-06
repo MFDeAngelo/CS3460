@@ -31,7 +31,7 @@ void simulation();
 int main()
 {
     simpleExample();
-    //simulation();
+    simulation();
 
     return 0;
 }
@@ -51,7 +51,6 @@ void simpleExample()
     // Example of using the iterator with an std::algorithm, isn't that cool!
     // Find the first value "less than d"
     auto f = std::find_if(pq.begin(), pq.end(), [](auto value) { return value.value < "d"; });
-
     if (f != pq.end())
     {
         std::cout << "--- Found item using std::find_if(...): ";
@@ -80,7 +79,6 @@ void simpleExample()
         reportPQ("", pq);
     }
 
-	
     usu::priority_queue<std::string> pq2{{"a"s, 1},
                                          {"b"s, 2},
                                          {"c"s, 3},
@@ -89,11 +87,7 @@ void simpleExample()
                                          {"f"s, 2}};
 
     reportPQ("--- Initialized from std::initializer_list ---", pq2);
-	
-	
 }
-
-/*
 
 void simulation()
 {
@@ -132,5 +126,3 @@ void simulation()
         }
     }
 }
-
-*/

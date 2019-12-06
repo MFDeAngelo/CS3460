@@ -5,7 +5,7 @@
 
 namespace usu
 {
-    template <typename T>
+    template <typename T, typename R = std::size_t>
     class priority_queue
     {
 
@@ -13,7 +13,7 @@ namespace usu
         using size_type = std::size_t;
         using value_type = T;
         using reference = T&;
-        using priority_type = std::size_t;
+        using priority_type = R;
 
         struct Item
         {
@@ -83,40 +83,34 @@ namespace usu
         void siftDown(size_type pos);
         void update(size_type pos);
 
-        bool isLeaf(int pos)
+        bool isLeaf(size_type pos)
         {
             return (pos >= count / 2) && (pos < count);
         }
 		size_type leftchild(size_type pos)
         {
-            if (pos >= count / 2)
-                return -1;
             return 2 * pos + 1;
         }
         size_type rightchild(size_type pos)
         {
-            if (pos >= (count - 1) / 2)
-                return -1;
             return 2 * pos + 2;
         }
         size_type parent(size_type pos)
         {
-            //      if (pos <= 0)
-            //        return -1;
             return (pos - 1) / 2;
         }
     };
 
-    template <typename T>
-    priority_queue<T>::priority_queue() :
+    template <typename T, typename R>
+    priority_queue<T, R>::priority_queue() :
         storageSize(0),
         count(0)
     {
         this->data.resize(0);
     }
 
-	template <typename T>
-	priority_queue<T>::priority_queue(std::initializer_list<std::pair<T, priority_type>> list):
+	template <typename T, typename R>
+    priority_queue<T, R>::priority_queue(std::initializer_list<std::pair<T, priority_type>> list) :
 		storageSize(0),
         count(0)
 	{
@@ -127,20 +121,20 @@ namespace usu
 		}
 	}
 
-    template <typename T>
-    typename priority_queue<T>::size_type priority_queue<T>::size() //Might need a template here...
+    template <typename T, typename R>
+    typename priority_queue<T, R>::size_type priority_queue<T, R>::size() //Might need a template here...
     {
         return count;
     }
 
-    template <typename T>
-    bool priority_queue<T>::empty()
+    template <typename T, typename R>
+    bool priority_queue<T, R>::empty()
     {
         return count == 0;
     }
 
-    template <typename T>
-    void priority_queue<T>::enqueue(value_type element, priority_type priority)
+    template <typename T, typename R>
+    void priority_queue<T, R>::enqueue(value_type element, priority_type priority)
     {
         if (storageSize == count)
         {
@@ -159,8 +153,8 @@ namespace usu
         }
     }
 
-    template <typename T>
-    auto priority_queue<T>::dequeue()
+    template <typename T, typename R>
+    auto priority_queue<T, R>::dequeue()
     {
         if (count == 0)
             throw std::exception();
@@ -173,47 +167,47 @@ namespace usu
         return result;
     }
 
-    template <typename T>
-    typename priority_queue<T>::iterator priority_queue<T>::begin()
+    template <typename T, typename R>
+    typename priority_queue<T, R>::iterator priority_queue<T, R>::begin()
     {
         return iterator(&data);
     }
 
-    template <typename T>
-    typename priority_queue<T>::iterator priority_queue<T>::end()
+    template <typename T, typename R>
+    typename priority_queue<T, R>::iterator priority_queue<T, R>::end()
     {
         return iterator(count, &data);
     }
 
-    template <typename T>
-    typename priority_queue<T>::iterator priority_queue<T>::iterator::operator++()
+    template <typename T, typename R>
+    typename priority_queue<T, R>::iterator priority_queue<T, R>::iterator::operator++()
     {
         position++;
         return *this;
     }
 
-    template <typename T>
-    typename priority_queue<T>::iterator priority_queue<T>::iterator::operator++(int)
+    template <typename T, typename R>
+    typename priority_queue<T, R>::iterator priority_queue<T, R>::iterator::operator++(int)
     {
         iterator temp = *this;
         position++;
         return temp;
     }
 
-    template <typename T>
-    bool priority_queue<T>::iterator::operator==(const iterator& rhs)
+    template <typename T, typename R>
+    bool priority_queue<T, R>::iterator::operator==(const iterator& rhs)
     {
         return this->data == rhs.data && this->position == rhs.position;
     }
 
-    template <typename T>
-    bool priority_queue<T>::iterator::operator!=(const iterator& rhs)
+    template <typename T, typename R>
+    bool priority_queue<T, R>::iterator::operator!=(const iterator& rhs)
     {
         return !operator==(rhs);
     }
 
-    template <typename T>
-    typename priority_queue<T>::iterator priority_queue<T>::find(T value)
+    template <typename T, typename R>
+    typename priority_queue<T, R>::iterator priority_queue<T, R>::find(T value)
     {
         iterator i = iterator(&data);
         while (i != end() && (*i).value != value)
@@ -223,29 +217,23 @@ namespace usu
 
         return i;
     }
-	/////////////////////////////////////////////////////////////////////////
-	template <typename T>
-	void priority_queue<T>::update(iterator i, priority_type priority) {
+
+	template <typename T, typename R>
+    void priority_queue<T, R>::update(iterator i, priority_type priority)
+    {
         (*i).priority = priority;
-        
         if (i.position != 0)
         {
             if (data[i.position].priority > data[parent(i.position)].priority)
             {
                 update(i.position);
             }
-            if (!isLeaf(i.position))
-            {
-				
-			}
-            
 		}
         heapify();
 	}
 
-
-    template <typename T>
-    void priority_queue<T>::heapify()
+    template <typename T, typename R>
+    void priority_queue<T, R>::heapify()
     {
         for (int i = 0; i < count; i++)
         {
@@ -253,14 +241,14 @@ namespace usu
         }
     }
 
-    template <typename T>
-    void priority_queue<T>::siftDown(size_type pos)
+    template <typename T, typename R>
+    void priority_queue<T, R>::siftDown(size_type pos)
     {
         if ((pos < 0) || (pos >= count))
             return;
         while (!isLeaf(pos))
         {
-            int j = leftchild(pos);
+            size_type j = leftchild(pos);
             if (j < (count - 1) && (data[j].priority < data[j + 1].priority))
                 j++; // j is now index of child with greater value
             if (data[pos].priority >= data[j].priority)
@@ -270,11 +258,11 @@ namespace usu
         }
     }
     
-    template <typename T>
-    void priority_queue<T>::update(size_type pos)
+    template <typename T, typename R>
+    void priority_queue<T, R>::update(size_type pos)
     {
         // If it is a big value, push it up
-        while ((pos > 0) && (data[pos].priority > data[parent(pos)].priority > 0))
+        while ((pos > 0) && (data[pos].priority > data[parent(pos)].priority))
         {
             std::swap(data[pos], data[parent(pos)]);
             pos = parent(pos);
@@ -282,41 +270,44 @@ namespace usu
         siftDown(pos); // If it is little, push down
     }
 
-    template <typename T>
-    typename priority_queue<T>::Item* priority_queue<T>::iterator::operator->()
+    template <typename T, typename R>
+    typename priority_queue<T, R>::Item* priority_queue<T, R>::iterator::operator->()
     {
         return &((*data)[position]);
     }
 
-    template <typename T>
-    typename priority_queue<T>::Item& priority_queue<T>::iterator::operator*()
+    template <typename T, typename R>
+    typename priority_queue<T, R>::Item& priority_queue<T, R>::iterator::operator*()
     {
         return (*data)[position];
     }
 
-    template <typename T>
-    priority_queue<T>::iterator::iterator(const iterator& obj)
+    template <typename T, typename R>
+    priority_queue<T, R>::iterator::iterator(const iterator& obj)
     {
         this->position = obj.position;
         this->data = obj.data;
     }
-    template <typename T>
-    priority_queue<T>::iterator::iterator(iterator&& obj) noexcept
+    
+	template <typename T, typename R>
+    priority_queue<T, R>::iterator::iterator(iterator&& obj) noexcept
     {
         this->position = obj.position;
         this->data = obj.data;
         obj.position = 0;
         obj.data = nullptr;
     }
-    template <typename T>
-    typename priority_queue<T>::iterator& priority_queue<T>::iterator::operator=(const iterator& rhs)
+    
+	template <typename T, typename R>
+    typename priority_queue<T, R>::iterator& priority_queue<T, R>::iterator::operator=(const iterator& rhs)
     {
         this->position = rhs.position;
         this->data = rhs.data;
         return *this;
     }
-    template <typename T>
-    typename priority_queue<T>::iterator& priority_queue<T>::iterator::operator=(iterator&& rhs)
+    
+	template <typename T, typename R>
+    typename priority_queue<T, R>::iterator& priority_queue<T, R>::iterator::operator=(iterator&& rhs)
     {
         if (this != &rhs)
         {
