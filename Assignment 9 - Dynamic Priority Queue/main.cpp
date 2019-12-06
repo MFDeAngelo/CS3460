@@ -48,13 +48,6 @@ void simpleExample()
     pq.enqueue("e", 4);
     pq.enqueue("f", 2);
 
-    pq.enqueue("g", 10);
-    pq.enqueue("h", 20);
-    pq.enqueue("i", 30);
-    pq.enqueue("j", 11);
-    pq.enqueue("k", 40);
-    pq.enqueue("l", 21);
-
     // Example of using the iterator with an std::algorithm, isn't that cool!
     // Find the first value "less than d"
     auto f = std::find_if(pq.begin(), pq.end(), [](auto value) { return value.value < "d"; });
@@ -69,7 +62,6 @@ void simpleExample()
     // Simple example of using the methods on the priority queue itself.
     auto a = pq.find("a");
     reportPQ("--- Before ---", pq);
-    /*
     pq.update(a, 5);
     reportPQ("--- After Updating a ---", pq);
     pq.update(pq.find("b"), 3);
@@ -88,6 +80,7 @@ void simpleExample()
         reportPQ("", pq);
     }
 
+	
     usu::priority_queue<std::string> pq2{{"a"s, 1},
                                          {"b"s, 2},
                                          {"c"s, 3},
@@ -96,8 +89,8 @@ void simpleExample()
                                          {"f"s, 2}};
 
     reportPQ("--- Initialized from std::initializer_list ---", pq2);
-
-	*/
+	
+	
 }
 
 /*

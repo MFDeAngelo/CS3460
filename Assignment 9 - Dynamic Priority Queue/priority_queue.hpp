@@ -1,5 +1,7 @@
 #include <iterator>
 #include <vector>
+#include <initializer_list>
+#include <utility>
 
 namespace usu
 {
@@ -26,14 +28,12 @@ namespace usu
         };
 
         priority_queue();
+        priority_queue(std::initializer_list<std::pair<T, priority_type>> list);
+
         size_type size();
         bool empty();
         void enqueue(value_type element, priority_type priority);
         auto dequeue();
-
-        void heapify();
-        void siftDown(size_type pos);
-        void update(size_type pos);
 
         using pointer = std::vector<Item>*;
 
@@ -50,7 +50,6 @@ namespace usu
             iterator(pointer data) :
                 position(0),
                 data(data) {}
-
             iterator(const iterator& obj);
             iterator(iterator&& obj) noexcept;
 
@@ -63,10 +62,9 @@ namespace usu
             bool operator==(const iterator& rhs);
             bool operator!=(const iterator& rhs);
 
-            Item operator*();
+            Item& operator*();
             Item* operator->();
 
-          private:
             size_type position;
             pointer data;
         };
@@ -74,35 +72,33 @@ namespace usu
         iterator begin();
         iterator end();
         iterator find(T value);
+        void update(iterator i, priority_type priority);
 
       private:
         std::vector<Item> data;
         size_type storageSize;
         size_type count;
 
-        // Return true if pos a leaf position, false otherwise
+        void heapify();
+        void siftDown(size_type pos);
+        void update(size_type pos);
+
         bool isLeaf(int pos)
         {
             return (pos >= count / 2) && (pos < count);
         }
-
-        // Return position for left child of pos
-        size_type leftchild(size_type pos)
+		size_type leftchild(size_type pos)
         {
             if (pos >= count / 2)
                 return -1;
             return 2 * pos + 1;
         }
-
-        // Return position for right child of pos
         size_type rightchild(size_type pos)
         {
             if (pos >= (count - 1) / 2)
                 return -1;
             return 2 * pos + 2;
         }
-
-        // Return position for parent
         size_type parent(size_type pos)
         {
             //      if (pos <= 0)
@@ -118,6 +114,18 @@ namespace usu
     {
         this->data.resize(0);
     }
+
+	template <typename T>
+	priority_queue<T>::priority_queue(std::initializer_list<std::pair<T, priority_type>> list):
+		storageSize(0),
+        count(0)
+	{
+        this->data.resize(0);
+        for (std::pair p : list)
+        {
+            enqueue(p.first, p.second);
+		}
+	}
 
     template <typename T>
     typename priority_queue<T>::size_type priority_queue<T>::size() //Might need a template here...
@@ -155,14 +163,14 @@ namespace usu
     auto priority_queue<T>::dequeue()
     {
         if (count == 0)
-            throw std::exception;
+            throw std::exception();
         auto result = data[0];
 
-        std::swap(data[0], data[--count;]);
+        std::swap(data[0], data[--count]);
 
-        siftDown(0)
+        siftDown(0);
 
-            return result;
+        return result;
     }
 
     template <typename T>
@@ -208,55 +216,54 @@ namespace usu
     typename priority_queue<T>::iterator priority_queue<T>::find(T value)
     {
         iterator i = iterator(&data);
-        while ((*i).value != value && i != end())
+        while (i != end() && (*i).value != value)
         {
             i++;
         }
+
         return i;
     }
+	/////////////////////////////////////////////////////////////////////////
+	template <typename T>
+	void priority_queue<T>::update(iterator i, priority_type priority) {
+        (*i).priority = priority;
+        
+        if (i.position != 0)
+        {
+            if (data[i.position].priority > data[parent(i.position)].priority)
+            {
+                update(i.position);
+            }
+            if (!isLeaf(i.position))
+            {
+				
+			}
+            
+		}
+        heapify();
+	}
+
 
     template <typename T>
     void priority_queue<T>::heapify()
     {
-
         for (int i = 0; i < count; i++)
         {
             siftDown(i);
         }
-
-        /*
-        if (index >= count)
-            return;
-        if (count > (2 * index) + 1) //Could have a bug here...
-        {
-            if (data[index].priority < data[(2 * index) + 1].priority)
-            {
-                std::swap(data[index], data[(2 * index) + 1]);
-			}
-		}
-        if (count > (2 * index) + 2)
-        {
-            if (data[index].priority < data[(2 * index) + 2].priority)
-            {
-                std::swap(data[index], data[(2 * index) + 2]);
-            }
-        }
-        heapify((2 * index) + 1);
-        heapify((2 * index) + 2);
-		*/
     }
 
     template <typename T>
     void priority_queue<T>::siftDown(size_type pos)
     {
         if ((pos < 0) || (pos >= count))
-            return; // Illegal position
+            return;
         while (!isLeaf(pos))
         {
             int j = leftchild(pos);
             if (j < (count - 1) && (data[j].priority < data[j + 1].priority))
                 j++; // j is now index of child with greater value
-            if (data[pos].priority >= data[pos].priority)
+            if (data[pos].priority >= data[j].priority)
                 return;
             std::swap(data[pos], data[j]);
             pos = j; // Move down
@@ -282,7 +289,7 @@ namespace usu
     }
 
     template <typename T>
-    typename priority_queue<T>::Item priority_queue<T>::iterator::operator*()
+    typename priority_queue<T>::Item& priority_queue<T>::iterator::operator*()
     {
         return (*data)[position];
     }
@@ -301,7 +308,6 @@ namespace usu
         obj.position = 0;
         obj.data = nullptr;
     }
-
     template <typename T>
     typename priority_queue<T>::iterator& priority_queue<T>::iterator::operator=(const iterator& rhs)
     {
