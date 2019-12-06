@@ -180,7 +180,7 @@ namespace usu
         if (*count == 0)
         {
             delete count;
-            delete managed_ptr;
+            delete[] managed_ptr;
         }
         this->managed_ptr = ptr.managed_ptr;
         this->count = ptr.count;
@@ -238,20 +238,3 @@ namespace usu
     }
 
 } // namespace usu
-
-/*
-
-Write a templated shared_ptr class, contained with a usu namespace according to the following specifications.
-
-If that isn't enough, make another shared_ptr class for arrays!  A few differences between this class and the previous one.
-
-The type declaration will start like...
-template<typename T> class shared_ptr<T[]>
-The overloaded constructor accepts two parameters:
-Raw pointer to the array.
-The number of elements in the array.
-The destructor needs to delete an array.
-Overload the [] operator for array-like access.
-A size method that results the number of elements in the array.
-
-*/

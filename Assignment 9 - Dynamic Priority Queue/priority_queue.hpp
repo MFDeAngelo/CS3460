@@ -235,7 +235,7 @@ namespace usu
     template <typename T, typename R>
     void priority_queue<T, R>::heapify()
     {
-        for (int i = 0; i < count; i++)
+        for (size_type i = 0; i < count; i++)
         {
             siftDown(i);
         }
