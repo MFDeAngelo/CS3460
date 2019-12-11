@@ -23,7 +23,7 @@ foreach(EXECUTABLE ${EXECUTABLES})
 	if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
 	    target_compile_options(${EXECUTABLE} PRIVATE /W4 /permissive-) #/WX
 	elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-		target_compile_options(${EXECUTABLE} PRIVATE -Wall -Wextra -pedantic -Werror)
+		target_compile_options(${EXECUTABLE} PRIVATE -Wall -Wextra -pedantic)
 	endif()
 endforeach()
 
