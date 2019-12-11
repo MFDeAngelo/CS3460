@@ -63,7 +63,7 @@ namespace usu
 	template <typename T>
 	unique_ptr<T>& unique_ptr<T>::operator=(unique_ptr<T>&& rhs) //Double check this!!!
     {
-        std::swap(this->data, rhs.data);
+        this->data = rhs.data;
         rhs.data = nullptr;
         return *this;
 	}
